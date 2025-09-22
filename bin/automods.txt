@@ -1,0 +1,93 @@
+'---------------------------------------------------------------------------------------------------------
+' This file serves as the instruction script for the AutoMod app.
+' It defines which modules to download, extract, and organize.
+'
+' Available commands:
+'
+'   [!] DOWNLOAD = <url>, <module_name>
+'       - It will downloads from <url> and unzip it into <module_name>.
+'       - For GitHub modules, just provide the repo link, e.g.:"https://github.com/swoolcock/diddy"
+'       - If <module_name> is not specified, the repo name or zip filename will be used.
+'       - Add "!" before DOWNLOAD will force to overwrite if the folder or file already exists in your system.
+'
+'   [!] MOVE = <fromFolder>, <toFolder>
+'   [!] COPY = <fromFolder>, <toFolder>
+'       - Copies or moves a folder from one location to another.
+'         <fromFolder> and <toFolder> are relative to "modules_ext" not an absolute paths.
+'         Example: "sdl2mixer\modules_ext\sdl2mixer", "sdl2mixer"
+'       - Add "!" before COPY or MOVE to force overwrite if the folder already exists.
+'	DELETE = <fromFolder> | <filename>
+'---------------------------------------------------------------------------------------------------------
+'FantomCX 3.00b - byu Michael Hartlef
+DOWNLOAD = "https://github.com/MikeHart66/fantomCX","fantomCX"
+DELETE   = "fantomCX\.github\"     	
+DELETE   = "fantomCX\.gitattributes"     	
+DELETE   = "fantomCX\.gitignore"     	
+
+'Flixel - by Arthur 'devolonter' Bikmullin
+'https://flixel.org/
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/399/","flixel"
+
+'VORTEX by Javier San Juan Cervera
+DOWNLOAD = "https://github.com/JaviCervera/vortex-cx","vortex"
+DELETE   = "vortex\.gitignore"     	
+
+'Minib3d (c) Simon Harrison
+'https://github.com/adamredwoods/minib3d-monkey
+DOWNLOAD = "https://github.com/adamredwoods/minib3d-monkey","minib3d"
+
+'GUI Basic by Christopher Challenger
+DOWNLOAD = "https://github.com/zomagic/guiBasic","guiBasic"
+MOVE     = "guiBasic\guiBasic2" , "guiBasic2"         	
+MOVE     = "guiBasic\Examples2" , "guiBasic2\Examples2"  
+
+'Holzchopf - www.holzchopf.ch
+!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/251/","holzchopf"
+!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/212/","holzchopf"
+!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/207/","holzchopf"
+!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/153/","holzchopf"
+!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/137/","holzchopf"
+
+'cTiled by TheMrCerebro
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/1069/",ctiled
+
+'box2d - Physic for CerberusX
+DOWNLOAD = "https://github.com/zomagic/box2d","box2d"
+
+'little module will let you save the content of a canvas to either a PNG, JPG or BMP file. - by FantomGL
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/550/","saveImage"
+
+'Access to camera photos by Rich Pantson
+DOWNLOAD = "https://github.com/pantson/cerberusx-rch-modules","rch"
+
+'CRT tv shader by PixelPaladin
+DOWNLOAD = "https://github.com/PixelPaladin/cx-crt","crt"
+ 
+'SDL2_Mixer by Ivelle Games
+DOWNLOAD  = "https://github.com/IvelleGames/CerberusSDL2_Mixer","sdl2mixer_temp"
+MOVE      = "sdl2mixer_temp\modules_ext\sdl2mixer" , "sdl2mixer"  
+MOVE      = "sdl2mixer_temp\libs" , "sdl2mixer\libs"  
+MOVE      = "sdl2mixer_temp\targets" , "sdl2mixer\targets"  
+MOVE      = "sdl2mixer_temp\LICENSE" , "sdl2mixer\LICENSE"         	
+MOVE      = "sdl2mixer_temp\README.md" , "sdl2mixer\README.md"         	
+DELETE    = "sdl2mixer_temp"   
+
+'SimpleUI and argyne by Nobuyuki (nobuyukinyuu)
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/401/","SimpleUI"
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/402/","argyne"
+
+'Diddy - by Shane Woolcock and Steven Revill
+DOWNLOAD = "https://github.com/zomagic/diddy","diddy_temp"
+MOVE      = "diddy_temp\src\diddy" , "diddy"  
+MOVE      = "diddy_temp\src\threading" , "threading"  
+DELETE    = "diddy_temp"   
+
+'REALTIME by Martin Leidel
+DOWNLOAD  = "https://github.com/KrautApps/Realtime","realtime_temp"
+COPY      = "realtime_temp\modules_ext\realtime","realtime"
+MOVE     = "realtime_temp\example.cxs" , "realtime\example.cxs"         	
+MOVE     = "realtime_temp\README.md" , "realtime\README.md"         	
+DELETE   = "realtime_temp"   
+
+'MonkeyX GIF Loader Originally by CopperCircle
+DOWNLOAD="https://github.com/ootsby/GIF-Loader","gif"
