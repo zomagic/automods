@@ -16,7 +16,7 @@ Copy the following files into the /bin/ folder of your CerberusX installation:
 - automods.txt
 
 Why there? You might ask. <br>
-To allow the app to know CerberusX location and easily copy the module in modules_ext without ask. 
+To allow the app to know CerberusX location and easily copy the modules into 'modules_ext' folder without ask. 
 
 Building from Source (Optional)
 ===============================
