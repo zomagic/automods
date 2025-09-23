@@ -27,7 +27,7 @@ To compile:<br>
 
 Command Line Usage
 ==================
-    automods.exe [-into=modulefolder][-update[=modname,modname,...]]
+    automods.exe [-into=modulefolder][-update=modname,modname,...]
 
 When execute, automods.exe reads the automods.txt file and downloads the modules listed inside.
 It will also apply any default you provide when executing automods.exe with parameter
@@ -35,14 +35,14 @@ It will also apply any default you provide when executing automods.exe with para
 Parameters:
 
 -into=modulefolder <br>
-	Target folder name for external modules.<br>
-	Without arguments (Default): modules_ext<br>
+	Target folder name for external modules (relative to the CerberusX folder)<br>
+	Without arguments (default), it will use 'modules_ext'<br>
 
--update[=**modname,modname,...**] <br>
+-update=modname,modname,... <br>
 	Force to update this modules and replace what in your system. <br>
-  Without this command, it will skip if your system already have that module.<br>
+	Without this command, it will skip if your system already have that module.<br>
 	With arguments (comma-separated list of modname): updates only those specific modules.<br>
-	Without modname arguments: It will updates all modules in the list.<br>
+	use 'ALL' to updates all modules in the list.<br>
   ⚠ WARNING <br>
   Running with the -update option will replace any existing modules with the same name.<br>
   If you have modified a module for your own use, do not run with -update or your changes will be lost.<br>
@@ -55,7 +55,7 @@ Parameters:
       Downloads all modules, skipping existing ones.<br>
       Example2: automods.exe -into=my_module<br>
       Downloads all modules into a folder named my_module. <br>
-      Example3: automods.exe -update<br>
+      Example3: automods.exe -update=ALL<br>
       Downloads all modules and replaces any existing ones.
       Example4: automods.exe -update=diddy,fantomCX<br>
       Updates only the diddy and fantomCX modules. All others will be download but remain untouched if already there. <br>
@@ -105,6 +105,13 @@ Use COPY or MOVE command to copy or move from folder to another folder:
 
 -Moves or copies a folder from one place to another within modules_ext. Example name: "sdl2mixer\modules_ext\sdl2mixer" , "sdl2mixer"<br>
 -Add ! before COPY or MOVE to force overwrite.<br>
+
+Use COPYC or MOVEC command to copy or move the contents from folder to another folder:
+
+    MOVEC = <fromFolder> , <toFolder>
+    COPYC = <fromFolder> , <toFolder>
+	
+-The above command will always replace any duplicate entry
 
 Use DELETE command to delete a folder or a file:
 

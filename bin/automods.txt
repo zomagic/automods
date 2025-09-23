@@ -1,23 +1,41 @@
 '---------------------------------------------------------------------------------------------------------
-' This file serves as the instruction script for the AutoMod app.
-' It defines which modules to download, extract, and organize.
-'
-' Available commands:
-'
-'   [!] DOWNLOAD = <url>, <module_name>
-'       - It will downloads from <url> and unzip it into <module_name>.
-'       - For GitHub modules, just provide the repo link, e.g.:"https://github.com/swoolcock/diddy"
-'       - If <module_name> is not specified, the repo name or zip filename will be used.
-'       - Add "!" before DOWNLOAD will force to overwrite if the folder or file already exists in your system.
-'
-'   [!] MOVE = <fromFolder>, <toFolder>
-'   [!] COPY = <fromFolder>, <toFolder>
-'       - Copies or moves a folder from one location to another.
-'         <fromFolder> and <toFolder> are relative to "modules_ext" not an absolute paths.
-'         Example: "sdl2mixer\modules_ext\sdl2mixer", "sdl2mixer"
-'       - Add "!" before COPY or MOVE to force overwrite if the folder already exists.
-'	DELETE = <fromFolder> | <filename>
+' AutoMod Instruction Script
 '---------------------------------------------------------------------------------------------------------
+' Configures module downloads, extraction, and organization for the AutoMod app.
+'
+' General Info:
+' - Commands are executed sequentially from top to bottom.
+' - All file operations are relative to the "modules_ext" directory.
+' - Supported archives (e.g., ZIP) are automatically extracted.
+' - Automatic backups are performed in specific scenarios to prevent data loss.
+'
+' Commands:
+'
+'   [!]DOWNLOAD = <url>, <module_name>
+'     - Downloads and extracts <url> to <module_name> folder.
+'     - GitHub repo links (e.g., "https://github.com/swoolcock/diddy") auto-extract to <module_name>.
+'     - If <module_name> is omitted, uses repo or zip filename.
+'     - Use ! to force overwrite existing files/folders.
+'
+'   [!]MOVE = <fromFolder>, <toFolder>
+'   [!]COPY = <fromFolder>, <toFolder>
+'     - Moves or copies <fromFolder> to <toFolder> (relative to "modules_ext").
+'     - Example: "sdl2mixer\modules_ext\sdl2mixer", "sdl2mixer"
+'     - Use ! to force overwrite existing folders.
+'
+'   MOVEC = <fromFolder>, <toFolder>
+'   COPYC = <fromFolder>, <toFolder>
+'     - Moves or copies contents from <fromFolder> to <toFolder> (relative to "modules_ext").
+'
+'   [!]DELETE = <fromFolder> | <filename>
+'     - Deletes specified file/folder (downloaded items only by default).
+'     - Use ! to force delete any file/folder.
+'
+' Usage Notes:
+' - Use "!" prefix for force operations to overwrite existing content.
+' - GitHub URLs are auto-detected and handled for seamless module extraction.
+'---------------------------------------------------------------------------------------------------------
+
 'FantomCX 3.00b - byu Michael Hartlef
 DOWNLOAD = "https://github.com/MikeHart66/fantomCX","fantomCX"
 DELETE   = "fantomCX\.github\"     	
@@ -42,11 +60,19 @@ MOVE     = "guiBasic\guiBasic2" , "guiBasic2"
 MOVE     = "guiBasic\Examples2" , "guiBasic2\Examples2"  
 
 'Holzchopf - www.holzchopf.ch
-!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/251/","holzchopf"
-!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/212/","holzchopf"
-!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/207/","holzchopf"
-!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/153/","holzchopf"
-!DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/137/","holzchopf"
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/251/","holzchopf"
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/212/","holzchopf_temp"
+COPYC = "holzchopf_temp","holzchopf"
+DELETE = "holzchopf_temp"
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/207/","holzchopf_temp1"
+COPYC = "holzchopf_temp1","holzchopf"
+DELETE = "holzchopf_temp1"
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/153/","holzchopf_temp2"
+COPYC = "holzchopf_temp2","holzchopf"
+DELETE = "holzchopf_temp2"
+DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/137/","holzchopf_temp3"
+COPYC = "holzchopf_temp3","holzchopf"
+DELETE = "holzchopf_temp3"
 
 'cTiled by TheMrCerebro
 DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/1069/",ctiled

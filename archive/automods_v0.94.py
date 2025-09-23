@@ -26,7 +26,6 @@ class ModuleDownloader:
         self.last_download = ""
         self.run_id = self._generate_run_id()
         self.created_paths = set()
-        self.no_backup = False  # Initialize no_backup flag
 
     def _generate_run_id(self):
         """Generate a 4-digit RunID based on current hour and minute"""
@@ -47,7 +46,6 @@ class ModuleDownloader:
         parser = argparse.ArgumentParser(description='CerberusX External Modules AutoMods')
         parser.add_argument('-update', type=str, help='Update specific modules (comma-separated) or ALL')
         parser.add_argument('-into', type=str, help='Target module folder', default='modules_ext')
-        parser.add_argument('-nobackup', action='store_true', help='Skip backup procedures')
 
         args = parser.parse_args()
 
@@ -59,8 +57,6 @@ class ModuleDownloader:
 
         if args.into:
             self.module_folder = args.into
-
-        self.no_backup = args.nobackup  # Set no_backup flag based on command line argument
 
     def setup_paths(self):
         """Setup module paths"""
@@ -136,7 +132,7 @@ class ModuleDownloader:
             to_path = self.clear_quote(parts[1].strip())
 
             need_update = True
-            if not need_replace and instruction not in ["COPYC", "MOVEC"]:
+            if not need_replace:
                 full_to_path = os.path.join(self.modules_ext_path, to_path)
                 if os.path.exists(full_to_path):
                     need_update = False
@@ -150,18 +146,16 @@ class ModuleDownloader:
                 full_from_path = os.path.join(self.modules_ext_path, from_path)
                 full_to_path = os.path.join(self.modules_ext_path, to_path)
 
-                if instruction in ["COPY", "MOVE"] and not self.no_backup:
-                    # Check for existing folder or file before copy/move
-                    if os.path.exists(full_to_path):
-                        backup_path = f"_{os.path.basename(full_to_path)}_BKP{self.run_id}"
-                        backup_full_path = os.path.join(os.path.dirname(full_to_path), backup_path)
-                        if not os.path.exists(backup_full_path):  # Only backup if no backup exists for this RunID
-                            try:
-                                shutil.move(full_to_path, backup_full_path)
-                                #print(f"   Backed up: {full_to_path}")
-                            except Exception as e:
-                                pass
-                                #print(f"   Warning: Could not backup {full_to_path}: {e}")
+                # Check for existing folder or file before copy/move
+                if os.path.exists(full_to_path):
+                    backup_path = f"{full_to_path}_BKP{self.run_id}"
+                    if not os.path.exists(backup_path):  # Only backup if no backup exists for this RunID
+                        try:
+                            shutil.move(full_to_path, backup_path)
+                            #print(f"   Backed up: {full_to_path}")
+                        except Exception as e:
+                            pass
+                            #print(f"   Warning: Could not backup {full_to_path}: {e}")
 
                 if os.path.exists(full_from_path):
                     if instruction == "COPY":
@@ -173,23 +167,6 @@ class ModuleDownloader:
                     elif instruction == "MOVE":
                         os.makedirs(os.path.dirname(full_to_path), exist_ok=True)
                         shutil.move(full_from_path, full_to_path)
-                    elif instruction == "COPYC":
-                        if os.path.isdir(full_from_path):
-                            os.makedirs(full_to_path, exist_ok=True)
-                            for item in os.listdir(full_from_path):
-                                src = os.path.join(full_from_path, item)
-                                dst = os.path.join(full_to_path, item)
-                                if os.path.isdir(src):
-                                    shutil.copytree(src, dst, dirs_exist_ok=True)
-                                elif os.path.isfile(src):
-                                    shutil.copy(src, dst)
-                    elif instruction == "MOVEC":
-                        if os.path.isdir(full_from_path):
-                            os.makedirs(full_to_path, exist_ok=True)
-                            for item in os.listdir(full_from_path):
-                                src = os.path.join(full_from_path, item)
-                                dst = os.path.join(full_to_path, item)
-                                shutil.move(src, dst)
 
     def handle_delete(self, path, need_replace):
         """Handle delete instruction"""
@@ -198,16 +175,15 @@ class ModuleDownloader:
 
         if need_replace:
             # Force delete: backup then delete
-            if os.path.exists(full_path) and not self.no_backup:
-                backup_path = f"_{os.path.basename(full_path)}_BKP{self.run_id}"
-                backup_full_path = os.path.join(os.path.dirname(full_path), backup_path)
-                if not os.path.exists(backup_full_path):
+            if os.path.exists(full_path):
+                backup_path = f"{full_path}_BKP{self.run_id}"
+                if not os.path.exists(backup_path):
                     try:
                         if os.path.isdir(full_path):
-                            shutil.copytree(full_path, backup_full_path)
+                            shutil.copytree(full_path, backup_path)
                         elif os.path.isfile(full_path):
-                            os.makedirs(os.path.dirname(backup_full_path), exist_ok=True)
-                            shutil.copy(full_path, backup_full_path)
+                            os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+                            shutil.copy(full_path, backup_path)
                         #print(f"   Backed up: {full_path}")
                     except Exception as e:
                         pass
@@ -270,8 +246,8 @@ class ModuleDownloader:
         file_path = os.path.join(self.modules_ext_path, name + ".zip")
 
         # Check for existing zip file and backup if needed
-        if os.path.exists(file_path) and not self.no_backup:
-            backup_zip = os.path.join(self.modules_ext_path, f"_{name}_BKP{self.run_id}.zip")
+        if os.path.exists(file_path):
+            backup_zip = os.path.join(self.modules_ext_path, f"{name}_BKP{self.run_id}.zip")
             if not os.path.exists(backup_zip):  # Only backup if no backup exists for this RunID
                 try:
                     shutil.move(file_path, backup_zip)
@@ -283,9 +259,9 @@ class ModuleDownloader:
         # Check for existing target folder and backup if needed (only if not created this run)
         target_dir = os.path.join(self.modules_ext_path, name)
         norm_target_dir = os.path.normpath(target_dir)
-        if os.path.exists(target_dir) and not self.no_backup:
+        if os.path.exists(target_dir):
             if norm_target_dir not in self.created_paths:
-                backup_dir = os.path.join(self.modules_ext_path, f"_{name}_BKP{self.run_id}")
+                backup_dir = f"{target_dir}_BKP{self.run_id}"
                 if not os.path.exists(backup_dir):  # Only backup if no backup exists for this RunID
                     try:
                         shutil.move(target_dir, backup_dir)

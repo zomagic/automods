@@ -5,6 +5,7 @@ CerberusX - External Modules AutoMods
 To make exe on window:
     pip install pyinstaller
     pyinstaller --onefile --distpath . --name automods.exe automods.py
+
 """
 
 import os
@@ -16,7 +17,6 @@ import argparse
 from pathlib import Path
 from urllib.parse import urlparse
 import platform
-from datetime import datetime
 
 class ModuleDownloader:
     def __init__(self):
@@ -24,14 +24,6 @@ class ModuleDownloader:
         self.update_list = []
         self.module_folder = "modules_ext"
         self.last_download = ""
-        self.run_id = self._generate_run_id()
-        self.created_paths = set()
-        self.no_backup = False  # Initialize no_backup flag
-
-    def _generate_run_id(self):
-        """Generate a 4-digit RunID based on current hour and minute"""
-        current_time = datetime.now()
-        return f"{current_time.hour:02d}{current_time.minute:02d}"
 
     def _get_base_dir(self):
         """Get the directory containing the script or executable"""
@@ -47,7 +39,6 @@ class ModuleDownloader:
         parser = argparse.ArgumentParser(description='CerberusX External Modules AutoMods')
         parser.add_argument('-update', type=str, help='Update specific modules (comma-separated) or ALL')
         parser.add_argument('-into', type=str, help='Target module folder', default='modules_ext')
-        parser.add_argument('-nobackup', action='store_true', help='Skip backup procedures')
 
         args = parser.parse_args()
 
@@ -59,8 +50,6 @@ class ModuleDownloader:
 
         if args.into:
             self.module_folder = args.into
-
-        self.no_backup = args.nobackup  # Set no_backup flag based on command line argument
 
     def setup_paths(self):
         """Setup module paths"""
@@ -136,9 +125,9 @@ class ModuleDownloader:
             to_path = self.clear_quote(parts[1].strip())
 
             need_update = True
-            if not need_replace and instruction not in ["COPYC", "MOVEC"]:
+            if not need_replace:
                 full_to_path = os.path.join(self.modules_ext_path, to_path)
-                if os.path.exists(full_to_path):
+                if os.path.isdir(full_to_path):
                     need_update = False
                     if self.last_download + "/" == to_path:
                         need_update = True
@@ -150,97 +139,32 @@ class ModuleDownloader:
                 full_from_path = os.path.join(self.modules_ext_path, from_path)
                 full_to_path = os.path.join(self.modules_ext_path, to_path)
 
-                if instruction in ["COPY", "MOVE"] and not self.no_backup:
-                    # Check for existing folder or file before copy/move
-                    if os.path.exists(full_to_path):
-                        backup_path = f"_{os.path.basename(full_to_path)}_BKP{self.run_id}"
-                        backup_full_path = os.path.join(os.path.dirname(full_to_path), backup_path)
-                        if not os.path.exists(backup_full_path):  # Only backup if no backup exists for this RunID
-                            try:
-                                shutil.move(full_to_path, backup_full_path)
-                                #print(f"   Backed up: {full_to_path}")
-                            except Exception as e:
-                                pass
-                                #print(f"   Warning: Could not backup {full_to_path}: {e}")
-
-                if os.path.exists(full_from_path):
-                    if instruction == "COPY":
-                        if os.path.isdir(full_from_path):
-                            shutil.copytree(full_from_path, full_to_path, dirs_exist_ok=True)
-                        elif os.path.isfile(full_from_path):
-                            os.makedirs(os.path.dirname(full_to_path), exist_ok=True)
-                            shutil.copy(full_from_path, full_to_path)
-                    elif instruction == "MOVE":
-                        os.makedirs(os.path.dirname(full_to_path), exist_ok=True)
+                if instruction == "COPY":
+                    if os.path.exists(full_from_path):
+                        shutil.copytree(full_from_path, full_to_path, dirs_exist_ok=True)
+                elif instruction == "MOVE":
+                    if os.path.exists(full_from_path):
                         shutil.move(full_from_path, full_to_path)
-                    elif instruction == "COPYC":
-                        if os.path.isdir(full_from_path):
-                            os.makedirs(full_to_path, exist_ok=True)
-                            for item in os.listdir(full_from_path):
-                                src = os.path.join(full_from_path, item)
-                                dst = os.path.join(full_to_path, item)
-                                if os.path.isdir(src):
-                                    shutil.copytree(src, dst, dirs_exist_ok=True)
-                                elif os.path.isfile(src):
-                                    shutil.copy(src, dst)
-                    elif instruction == "MOVEC":
-                        if os.path.isdir(full_from_path):
-                            os.makedirs(full_to_path, exist_ok=True)
-                            for item in os.listdir(full_from_path):
-                                src = os.path.join(full_from_path, item)
-                                dst = os.path.join(full_to_path, item)
-                                shutil.move(src, dst)
 
     def handle_delete(self, path, need_replace):
         """Handle delete instruction"""
         full_path = os.path.join(self.modules_ext_path, path)
-        full_path = os.path.normpath(full_path)  # Normalize for comparison
+        #print(f"Attempting to delete: {full_path}")
 
-        if need_replace:
-            # Force delete: backup then delete
-            if os.path.exists(full_path) and not self.no_backup:
-                backup_path = f"_{os.path.basename(full_path)}_BKP{self.run_id}"
-                backup_full_path = os.path.join(os.path.dirname(full_path), backup_path)
-                if not os.path.exists(backup_full_path):
-                    try:
-                        if os.path.isdir(full_path):
-                            shutil.copytree(full_path, backup_full_path)
-                        elif os.path.isfile(full_path):
-                            os.makedirs(os.path.dirname(backup_full_path), exist_ok=True)
-                            shutil.copy(full_path, backup_full_path)
-                        #print(f"   Backed up: {full_path}")
-                    except Exception as e:
-                        pass
-                        #print(f"   Warning: Could not backup {full_path}: {e}")
-                # Proceed to delete
-                try:
-                    if os.path.isdir(full_path):
-                        shutil.rmtree(full_path, ignore_errors=True)
-                    elif os.path.isfile(full_path):
-                        os.remove(full_path)
-                except Exception as e:
-                    pass
-                    #print(f"   Error deleting {full_path}: {e}")
-        else:
-            # Normal delete: only if under a created path
-            can_delete = False
-            for created in self.created_paths:
-                created = os.path.normpath(created)
-                if os.path.commonpath([created, full_path]) == created:
-                    can_delete = True
-                    break
-            if can_delete and os.path.exists(full_path):
-                try:
-                    if os.path.isdir(full_path):
-                        shutil.rmtree(full_path, ignore_errors=True)
-                    elif os.path.isfile(full_path):
-                        os.remove(full_path)
-                except Exception as e:
-                    pass
-                    #print(f"   Error deleting {full_path}: {e}")
-            elif os.path.exists(full_path):
+        try:
+            if os.path.exists(full_path):
+                if os.path.isdir(full_path):
+                    shutil.rmtree(full_path, ignore_errors=True)
+                    #print(f"Deleted directory and contents: {full_path}")
+                elif os.path.isfile(full_path):
+                    os.remove(full_path)
+                    #print(f"Deleted file: {full_path}")
+            else:
+                #print(f"Path does not exist: {full_path}")
                 pass
-                #print(f"   Skipped delete of {full_path} (not created this run; use ! to force)")
+        except Exception as e:
+            #print(f"Error deleting {full_path}: {e}")
+            pass
 
     def download(self, addr, name="", need_replace=False):
         """Download and extract module"""
@@ -269,37 +193,10 @@ class ModuleDownloader:
 
         file_path = os.path.join(self.modules_ext_path, name + ".zip")
 
-        # Check for existing zip file and backup if needed
-        if os.path.exists(file_path) and not self.no_backup:
-            backup_zip = os.path.join(self.modules_ext_path, f"_{name}_BKP{self.run_id}.zip")
-            if not os.path.exists(backup_zip):  # Only backup if no backup exists for this RunID
-                try:
-                    shutil.move(file_path, backup_zip)
-                    #print(f"   Backed up: {name}.zip")
-                except Exception as e:
-                    pass
-                    #print(f"   Warning: Could not backup {file_path}: {e}")
-
-        # Check for existing target folder and backup if needed (only if not created this run)
-        target_dir = os.path.join(self.modules_ext_path, name)
-        norm_target_dir = os.path.normpath(target_dir)
-        if os.path.exists(target_dir) and not self.no_backup:
-            if norm_target_dir not in self.created_paths:
-                backup_dir = os.path.join(self.modules_ext_path, f"_{name}_BKP{self.run_id}")
-                if not os.path.exists(backup_dir):  # Only backup if no backup exists for this RunID
-                    try:
-                        shutil.move(target_dir, backup_dir)
-                        #print(f"   Backed up: {target_dir}")
-                    except Exception as e:
-                        pass
-                        #print(f"   Warning: Could not backup {target_dir}: {e}")
-            # If in created_paths, skip backup and extract on top
-
         print(f"Downloading.. {name}")
         if self.actual_download(url, file_path):
             if self.extract_zip(file_path, name):
                 self.last_download = name
-                self.created_paths.add(norm_target_dir)
             else:
                 print(f"   FAIL to extract {name}!")
             # Delete zip file
@@ -317,25 +214,29 @@ class ModuleDownloader:
     def actual_download(self, url, file_path):
         """Download file using requests with proper redirect handling and progress"""
         try:
+            # Configure session for better compatibility
             session = requests.Session()
             session.headers.update({
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             })
 
+            # Get file info first
             response = session.get(url,
                                  allow_redirects=True,
                                  timeout=60,
                                  stream=True)
             response.raise_for_status()
 
+            # Save to file with progress
             downloaded = 0
-            last_progress = -10
+            last_progress = -10  # Start at -10 to ensure 0% prints
 
             with open(file_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
                         downloaded += len(chunk)
+                        # Show progress
                         if downloaded % (1024 * 1024) < 8192:
                             mb_downloaded = downloaded / (1024 * 1024)
                             if mb_downloaded == 0 or int(mb_downloaded * 10) % 10 == 0:
@@ -354,19 +255,23 @@ class ModuleDownloader:
             target_dir = os.path.join(self.modules_ext_path, target_name)
 
             with zipfile.ZipFile(zip_path, 'r') as zip_file:
+                # Get list of files to extract
                 file_list = zip_file.infolist()
                 total_files = len(file_list)
 
-                last_progress = -10
+                last_progress = -10  # Start at -10 to ensure 0% prints
 
+                # Extract files with progress
                 for i, file_info in enumerate(file_list):
                     zip_file.extract(file_info, target_dir)
                     progress = int(((i + 1) / total_files) * 100)
+
+                    # Only update display every 10% or at 0% and 100%
                     if (progress % 10 == 0 or progress == 100) and progress > last_progress:
                         if progress == 100:
                             print(f"   Unzip: {progress}% ({i + 1}/{total_files} files)", end='')
                         else:
-                            print(f"   Unzip: {progress}% ({i + 1}/{total_files} files)\r", end='')
+                           print(f"   Unzip: {progress}% ({i + 1}/{total_files} files)\r", end='')
                         sys.stdout.flush()
                         last_progress = progress
 
@@ -383,64 +288,79 @@ class ModuleDownloader:
         """Fix nested folder structure by moving contents up"""
         try:
             entries = os.listdir(target_dir)
+            # If there's only one entry and it's a directory, move its contents up
             if len(entries) == 1:
                 nested_path = os.path.join(target_dir, entries[0])
                 if os.path.isdir(nested_path):
+                    # Move all contents from nested folder to target folder
                     for item in os.listdir(nested_path):
                         src = os.path.join(nested_path, item)
                         dst = os.path.join(target_dir, item)
                         shutil.move(src, dst)
+                    # Remove the now-empty nested folder
                     os.rmdir(nested_path)
         except Exception as e:
-            pass
-            #print(f"   Warning: Could not fix nested folder: {e}")
+            print(f"   Warning: Could not fix nested folder: {e}")
 
     def fix_nested_folder(self, target_dir, target_name):
         """Fix nested folder structure by moving contents up when nested folder matches target_name"""
         try:
             if not os.path.isdir(target_dir):
+                #print(f"   Error: Target directory does not exist: {target_dir}")
                 return
 
+            # Get the base name of the target directory
             target_base = os.path.basename(os.path.normpath(target_dir))
             nested_path = os.path.join(target_dir, target_base)
 
+            # Check if the nested folder exists and matches the target name
             if not os.path.isdir(nested_path):
+                #print(f"   No nested folder '{target_base}' found in {target_dir}")
                 return
 
+            # Verify the nested folder has contents
             nested_contents = os.listdir(nested_path)
             if not nested_contents:
+                #print(f"   Nested folder '{target_base}' is empty, no action needed")
                 os.rmdir(nested_path)
                 return
 
+            #print(f"   Found nested folder '{target_base}', moving contents up...")
+
+            # Move all contents from nested folder to target folder
             for item in nested_contents:
                 src = os.path.join(nested_path, item)
                 dst = os.path.join(target_dir, item)
 
+                # Handle conflicts
                 if os.path.exists(dst):
                     if os.path.isdir(dst) and os.path.isdir(src):
+                        # Merge directories recursively
                         shutil.copytree(src, dst, dirs_exist_ok=True)
                         shutil.rmtree(src)
                     else:
+                        # Overwrite files or skip if same type
                         if os.path.isfile(dst) and os.path.isfile(src):
-                            os.remove(dst)
+                            os.remove(dst)  # Remove existing file
                         shutil.move(src, dst)
                 else:
                     shutil.move(src, dst)
 
+            # Remove the now-empty nested folder
             try:
                 os.rmdir(nested_path)
+                #print(f"   Removed empty nested folder: {nested_path}")
             except OSError as e:
-                pass
-                #print(f"   Warning: Could not remove nested folder (not empty or error): {e}")
+                print(f"   Warning: Could not remove nested folder (not empty or error): {e}")
+
+            #print(f"   Moved {len(nested_contents)} items from nested folder")
 
         except Exception as e:
-            pass
-            #print(f"   Error: Could not fix nested folder: {e}")
+            print(f"   Error: Could not fix nested folder: {e}")
 
     def run(self):
         """Main execution"""
         print("CerberusX - External Modules AutoMods")
-        #print(f"RunID: {self.run_id}")
 
         self.parse_commandline()
         self.setup_paths()
