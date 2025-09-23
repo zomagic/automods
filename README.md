@@ -30,7 +30,7 @@ To compile:<br>
 
 Command Line Usage
 ==================
-    automods.exe [-into=modulefolder][-update=modname,modname,...]
+    automods.exe [-into=modulefolder][-update=modname,modname,...][-nobackup]
 
 When execute, automods.exe reads the automods.txt file and downloads the modules listed inside.
 It will also apply any default you provide when executing automods.exe with parameter
@@ -41,6 +41,10 @@ Parameters:
 	Target folder name for external modules (relative to the CerberusX folder)<br>
 	Without arguments (default), it will use 'modules_ext'<br>
 
+--nobackup <br>
+	By default automatic backups are performed in specific scenarios to prevent data loss.
+	This command will eliminate the backup function
+	
 -update=modname,modname,... <br>
 	Force to update this modules and replace what in your system. <br>
 	Without this command, it will skip if your system already have that module.<br>
@@ -48,9 +52,9 @@ Parameters:
 	use 'ALL' to updates all modules in the list.<br>
   ⚠ WARNING <br>
   Running with the -update option will replace any existing modules with the same name.<br>
-  If you have modified a module for your own use, do not run with -update or your changes will be lost.<br>
-  👉 To be safe, back up your customized modules before updating.<br>
-  Better safe than sorry!<br>
+  Automatic backups are performed in specific scenarios when needed.
+  If you have modified a module for your own use, do not run with -update with -nobackup or your changes will be lost.<br>
+  👉 Better safe than sorry!<br>
 
   Example:<br>
   
