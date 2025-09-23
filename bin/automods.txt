@@ -117,3 +117,6 @@ DELETE   = "realtime_temp"
 
 'MonkeyX GIF Loader Originally by CopperCircle
 DOWNLOAD="https://github.com/ootsby/GIF-Loader","gif"
+
+'ChallangerGUI by Christopher Challenger
+DOWNLOAD = "https://github.com/zomagic/challengergui","challengergui"
