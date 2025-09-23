@@ -52,8 +52,7 @@ Parameters:
 	use 'ALL' to updates all modules in the list.<br>
   ⚠ WARNING <br>
   Running with the -update option will replace any existing modules with the same name.<br>
-  Automatic backups are performed in specific scenarios when needed.
-  If you have modified a module for your own use, do not run with -update with -nobackup or your changes will be lost.<br>
+  If you have modified a module for your own use, do not update with -nobackup or your changes will be lost.<br>
   👉 Better safe than sorry!<br>
 
   Example:<br>
