@@ -1,9 +1,12 @@
+
 # automods
 
 Purpose: AutoMods is a helper tool that automatically downloads and installs a collection <br>
 of external modules for CerberusX (https://cerberus-x.com/) <br>
 It works by reading a simple list of links (from a txt file) and fetching the corresponding modules. <br>
 The tool then extracts them into the modules_ext (or custom) folder of your CerberusX installation. <br>
+
+![AutoMods](https://github.com/zomagic/automods/blob/main/automods.gif)
 
 Installation
 ============
@@ -13,7 +16,7 @@ Copy the following files into the /bin/ folder of your CerberusX installation:
 - automods.txt
 
 Why there? You might ask. <br>
-To allow the app to know CerberusX location and easily copy the module in modules_ext without ask. 
+To allow the app to know CerberusX location and easily copy the modules into 'modules_ext' folder without ask. 
 
 Building from Source (Optional)
 ===============================
