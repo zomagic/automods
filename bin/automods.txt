@@ -120,3 +120,7 @@ DOWNLOAD="https://github.com/ootsby/GIF-Loader","gif"
 
 'ChallangerGUI by Christopher Challenger
 DOWNLOAD = "https://github.com/zomagic/challengergui","challengergui"
+
+'IniHandler by Martin Leidel 
+DOWNLOAD = "https://github.com/MartinLeidel/cx-inihandler","inihandler"
+
