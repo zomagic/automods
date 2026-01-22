@@ -18,6 +18,10 @@ Copy the following files into the /bin/ folder of your CerberusX installation:
 Why there? You might ask. <br>
 To allow the app to know CerberusX location and easily copy the modules into 'modules_ext' folder without ask. 
 
+How to run?<br>
+For most users, the default setup is all you need:<br>
+Just run or double-click automods.exe to automatically download and install all listed modules into your modules_ext folder - no commands, no setup, no hassle.
+
 Building from Source (Optional)
 ===============================
 
@@ -134,4 +138,13 @@ Example:
     DOWNLOAD = "https://github.com/swoolcock/diddy", "diddy_temp"
     COPY     = "diddy_temp\src\diddy" , "diddy"         		
     DELETE   = "diddy_temp"	
+
+License & Contributions
+=======================
+
+AutoMods is free to use and distribute. Module licenses vary—please check individual repositories for details.
+
+Contributions, suggestions, and bug reports are welcome! Open an issue or submit a PR.
+
+Happy coding with Cerberus X! 🎮✨
 
