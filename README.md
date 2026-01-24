@@ -74,6 +74,7 @@ Parameters:
 Included Modules
 ================
 - FantomCX - by Michael Hartlef<br>
+- Flurry SDK - by Michael Hartlef<br>
 - Flixel - by Arthur 'devolonter' Bikmullin<br>
 - Vortex by Javier San Juan Cervera<br>
 - Minib3d by Simon Harrison<br>
