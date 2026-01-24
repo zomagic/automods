@@ -85,9 +85,6 @@ DOWNLOAD = "https://community.cerberus-x.com/index.php?file-download/550/","save
 
 'Access to camera photos by Rich Pantson
 DOWNLOAD = "https://github.com/pantson/cerberusx-rch-modules","rch"
-
-'CRT tv shader by PixelPaladin
-DOWNLOAD = "https://github.com/PixelPaladin/cx-crt","crt"
  
 'SDL2_Mixer by Ivelle Games
 DOWNLOAD  = "https://github.com/IvelleGames/CerberusSDL2_Mixer","sdl2mixer_temp"
@@ -124,3 +121,66 @@ DOWNLOAD = "https://github.com/zomagic/challengergui","challengergui"
 'IniHandler by Martin Leidel 
 DOWNLOAD = "https://github.com/MartinLeidel/cx-inihandler","inihandler"
 
+'appodeal by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-appodeal","appodeal_temp"
+MOVE      = "appodeal_temp\modules_ext\appodeal","appodeal"
+MOVE      = "appodeal_temp\example","appodeal\example"
+DELETE    = "appodeal_temp"   
+'gameservices by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-gameservices","gameservices_temp"
+MOVE      = "gameservices_temp\modules_ext\gameservices","gameservices"
+MOVE      = "gameservices_temp\examples","gameservices\examples"
+DELETE    = "gameservices_temp"   
+'Access to Android camera gallery by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/cerberusx-rch-modules","gallery_temp"
+MOVE      = "gallery_temp\rch","gallery"
+DELETE    = "gallery_temp"   
+'imagefilter by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-imagefilter","imagefilter_temp"
+MOVE      = "imagefilter_temp\modules_ext\imagefilter","imagefilter"
+MOVE      = "imagefilter_temp\example","imagefilter\example"
+DELETE    = "imagefilter\example\.gitignore"     	
+DELETE    = "imagefilter_temp"   
+'soundtext by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-soundtext","soundtext_temp"
+MOVE      = "soundtext_temp\modules_ext\soundtext","soundtext"
+MOVE      = "soundtext_temp\example","soundtext\example"
+DELETE    = "soundtext\example\.gitignore"     	
+DELETE    = "soundtext_temp"   
+'wavdata by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-wavdata","wavdata_temp"
+MOVE      = "wavdata_temp\modules_ext\wavdata","wavdata"
+DELETE    = "wavdata_temp"   
+'collisions by Richard Hanson OK
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-collisions","collisions_temp"
+MOVE      = "collisions_temp\modules_ext\collisions","collisions"
+MOVE      = "collisions_temp\example","collisions\example"
+DELETE    = "collisions_temp"   
+'functioncall by Richard Hanson 
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-functioncall","functioncall_temp"
+MOVE      = "functioncall_temp\modules_ext\functioncall","functioncall"
+MOVE      = "functioncall_temp\example","functioncall\example"
+DELETE    = "functioncall_temp"   
+'fileobject by Richard Hanson
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-fileobject","fileobject_temp"
+MOVE      = "fileobject_temp\modules_ext\fileobject","fileobject"
+MOVE      = "fileobject_temp\example","fileobject\example"
+DELETE    = "fileobject_temp"   
+'vibrate by Richard Hanson
+DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-vibrate","vibrate_temp"
+MOVE      = "vibrate_temp\modules_ext\vibrate","vibrate"
+MOVE      = "vibrate_temp\examples","vibrate\examples"
+DELETE    = "vibrate_temp"   
+
+'Collision Mask Module by David Powell 
+'(https://www.loadcode.co.uk/software/monkey-x-software/collision-mask-module/)
+DOWNLOAD = "https://github.com/zomagic/collisionmask","collisionmask"
+
+'LocalStorage by Olive Perry
+DOWNLOAD = "https://github.com/wickworks/localstorage","localstorage"
+
+'Several modules by Mag 
+DOWNLOAD = "https://github.com/zomagic/cerberus_magic","magic"
+
+'Regal Modules by Regal-Internet-Brothers 
+DOWNLOAD = "https://github.com/zomagic/regal","regal"
