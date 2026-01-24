@@ -37,7 +37,7 @@
 '---------------------------------------------------------------------------------------------------------
 
 'FantomCX 3.00b - byu Michael Hartlef
-DOWNLOAD = "https://github.com/MikeHart66/fantomCX","fantomCX"
+DOWNLOAD = "https://codeberg.org/MikeHart66/fantomCX","fantomCX"
 DELETE   = "fantomCX\.github\"     	
 DELETE   = "fantomCX\.gitattributes"     	
 DELETE   = "fantomCX\.gitignore"     	
@@ -179,7 +179,7 @@ DOWNLOAD = "https://github.com/zomagic/collisionmask","collisionmask"
 'LocalStorage by Olive Perry
 DOWNLOAD = "https://github.com/wickworks/localstorage","localstorage"
 
-'Video & PolarCollution by Mag 
+'Video & PolarCollution by Mag  
 DOWNLOAD = "https://github.com/zomagic/cerberus_magic","magic"
 
 'Regal Modules by Regal-Internet-Brothers 

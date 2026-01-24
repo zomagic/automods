@@ -264,6 +264,11 @@ class ModuleDownloader:
                 url = addr + "/archive/master.zip"
             else:
                 url = addr
+        elif "codeberg.org" in addr:
+            if not addr.endswith(".zip"):
+                url = addr + "/archive/master.zip"
+            else:
+                url = addr
         else:
             url = addr
 
