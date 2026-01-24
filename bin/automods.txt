@@ -151,7 +151,7 @@ DELETE    = "soundtext_temp"
 DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-wavdata","wavdata_temp"
 MOVE      = "wavdata_temp\modules_ext\wavdata","wavdata"
 DELETE    = "wavdata_temp"   
-'collisions by Richard Hanson OK
+'collisions by Richard Hanson
 DOWNLOAD = "https://github.com/pantson/pantson-cerberusx-collisions","collisions_temp"
 MOVE      = "collisions_temp\modules_ext\collisions","collisions"
 MOVE      = "collisions_temp\example","collisions\example"
@@ -179,7 +179,7 @@ DOWNLOAD = "https://github.com/zomagic/collisionmask","collisionmask"
 'LocalStorage by Olive Perry
 DOWNLOAD = "https://github.com/wickworks/localstorage","localstorage"
 
-'Several modules by Mag 
+'Video & PolarCollution by Mag 
 DOWNLOAD = "https://github.com/zomagic/cerberus_magic","magic"
 
 'Regal Modules by Regal-Internet-Brothers 

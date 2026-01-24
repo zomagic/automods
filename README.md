@@ -83,12 +83,27 @@ Included Modules
 - box2d - Physic for CerberusX<br>
 - saveImage - by FantomGL<br>
 - rch by Rich Pantson<br>
-- crt by PixelPaladin<br>
 - sdl2mixer by Ivelle Games<br>
 - SimpleUI and Argyne by Nobuyuki<br>
 - Diddy - by Shane Woolcock and Steven Revill<br>
 - realtime by Martin Leidel<br>
 - gif Loader by CopperCircle<br>
+- ChallangerGUI by Christopher Challenger
+- IniHandler by Martin Leidel 
+- appodeal by Richard Hanson
+- gameservices by Richard Hanson 
+- imagefilter by Richard Hanson 
+- Android Gallery by Richard Hanson 
+- soundtext by Richard Hanson  
+- wavdata by Richard Hanson 
+- collisions by Richard Hanson
+- functioncall by Richard Hanson 
+- fileobject by Richard Hanson
+- vibrate by Richard Hanson
+- Collision Mask by David Powell 
+- LocalStorage by Olive Perry
+- Video & Polarcollision by Mag 
+- Regal by Regal-Internet-Brothers 
 - ...and possibly others<br>
 You can add or edit the module list yourself at automods.txt <br>
 
