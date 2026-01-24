@@ -36,11 +36,16 @@
 ' - GitHub URLs are auto-detected and handled for seamless module extraction.
 '---------------------------------------------------------------------------------------------------------
 
-'FantomCX 3.00b - byu Michael Hartlef
+'FantomCX - byu Michael Hartlef
 DOWNLOAD = "https://codeberg.org/MikeHart66/fantomCX","fantomCX"
 DELETE   = "fantomCX\.github\"     	
 DELETE   = "fantomCX\.gitattributes"     	
 DELETE   = "fantomCX\.gitignore"     	
+'Flurry SDK - byu Michael Hartlef
+DOWNLOAD = "https://codeberg.org/MikeHart66/flurry_cx","flurry"
+DELETE   = "flurry\.github\"     	
+DELETE   = "flurry\.gitattributes"     	
+DELETE   = "flurry\.gitignore"     	
 
 'Flixel - by Arthur 'devolonter' Bikmullin
 'https://flixel.org/

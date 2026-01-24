@@ -262,11 +262,13 @@ class ModuleDownloader:
         if "github.com" in addr:
             if not addr.endswith(".zip"):
                 url = addr + "/archive/master.zip"
+                url2 = addr + "/archive/main.zip"
             else:
                 url = addr
         elif "codeberg.org" in addr:
             if not addr.endswith(".zip"):
                 url = addr + "/archive/master.zip"
+                url2 = addr + "/archive/main.zip"
             else:
                 url = addr
         else:
@@ -302,6 +304,17 @@ class ModuleDownloader:
 
         print(f"Downloading.. {name}")
         if self.actual_download(url, file_path):
+            if self.extract_zip(file_path, name):
+                self.last_download = name
+                self.created_paths.add(norm_target_dir)
+            else:
+                print(f"   FAIL to extract {name}!")
+            # Delete zip file
+            try:
+                os.remove(file_path)
+            except:
+                pass
+        elif self.actual_download(url2, file_path):
             if self.extract_zip(file_path, name):
                 self.last_download = name
                 self.created_paths.add(norm_target_dir)
@@ -350,7 +363,7 @@ class ModuleDownloader:
                         print()
             return os.path.getsize(file_path) > 0
         except Exception as e:
-            print(f"\n   Download error: {e}")
+            #print(f"\n   Download error: {e}")
             return False
 
     def extract_zip(self, zip_path, target_name):
