@@ -36,7 +36,25 @@
 ' - GitHub URLs are auto-detected and handled for seamless module extraction.
 '---------------------------------------------------------------------------------------------------------
 
-'FantomCX - byu Michael Hartlef
+'bosh77 - by Daniele
+DOWNLOAD = "https://github.com/bosh77/cx-boshlibs","bosh77_temp1"
+MOVE      = "bosh77_temp1\boshlibs" , "boshlibs"  
+MOVE      = "bosh77_temp1\native-fonts-example.data" , "boshlibs\examples\native-fonts-example.data"  
+MOVE      = "bosh77_temp1\printer-example.data" , "boshlibs\examples\printer-example.data"         	
+MOVE      = "bosh77_temp1\videos-mp4-example.data" , "boshlibs\examples\videos-mp4-example.data"   
+MOVE      = "bosh77_temp1\LICENSE" , "boshlibs\LICENSE"   
+MOVE      = "bosh77_temp1\controls-example.cxs" , "boshlibs\examples\controls-example.cxs"   
+MOVE      = "bosh77_temp1\gps-map-example.cxs" , "boshlibs\examples\gps-map-example.cxs"   
+MOVE      = "bosh77_temp1\httprequest-example.cxs" , "boshlibs\examples\httprequest-example.cxs"   
+MOVE      = "bosh77_temp1\keyboard-android-example.cxs" , "boshlibs\examples\keyboard-android-example.cxs"   
+MOVE      = "bosh77_temp1\menu-example.cxs" , "boshlibs\examples\menu-example.cxs"   
+MOVE      = "bosh77_temp1\native-fonts-example.cxs" , "boshlibs\examples\native-fonts-example.cxs"   
+MOVE      = "bosh77_temp1\printer-example.cxs" , "boshlibs\examples\printer-example.cxs"   
+MOVE      = "bosh77_temp1\requesters-example.cxs" , "boshlibs\examples\requesters-example.cxs"   
+MOVE      = "bosh77_temp1\videos-mp4-example.cxs" , "boshlibs\examples\videos-mp4-example.cxs"     	
+DELETE    = "bosh77_temp1"   
+
+'FantomCX - by Michael Hartlef
 DOWNLOAD = "https://codeberg.org/MikeHart66/fantomCX","fantomCX"
 DELETE   = "fantomCX\.github\"     	
 DELETE   = "fantomCX\.gitattributes"     	
